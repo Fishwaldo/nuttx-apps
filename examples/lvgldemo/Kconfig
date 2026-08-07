@@ -28,3 +28,24 @@ config EXAMPLES_LVGLDEMO_INPUT_DEVPATH
 		The path to the touchscreen device. Default: "/dev/input0"
 
 endif # EXAMPLES_LVGLDEMO
+
+config EXAMPLES_LVGLDEMO_KEYPAD
+	bool "Drive the demo from a keyboard"
+	default n
+	---help---
+		Read a keyboard character device and offer it to LVGL as a
+		keypad, so the widgets can be reached on a board whose only
+		input is a keyboard.  Tab moves between them, return presses,
+		and anything else arrives as the character it is.
+
+		LVGL's own NuttX drivers cover a touchscreen and nothing else,
+		which is why this lives here.
+
+config EXAMPLES_LVGLDEMO_KEYPAD_DEVPATH
+	string "Keyboard device"
+	default "/dev/kbda"
+	depends on EXAMPLES_LVGLDEMO_KEYPAD
+	---help---
+		The character device to read.  A USB HID keyboard that
+		presents more than one interface registers more than one of
+		these, and it is not always the first that carries the keys.
